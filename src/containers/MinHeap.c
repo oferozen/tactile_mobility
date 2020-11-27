@@ -29,7 +29,7 @@ size_t left(size_t index) { return ((index * 2) + 1); }
 size_t right(size_t index) { return ((index * 2) + 1); }
 size_t parent(size_t index) { return ((index - 1) / 2); }
 
-void siftDown ( min_heap_t minHeap ) {
+void sift_down ( min_heap_t minHeap ) {
     element_t* elements = minHeap->elements;
     size_t index = 0;
     while (true){
@@ -53,7 +53,7 @@ void siftDown ( min_heap_t minHeap ) {
     }
 }
 
-void siftUp (min_heap_t min_heap) {
+void sift_up (min_heap_t min_heap) {
 
     element_t* elements = min_heap->elements;
     size_t index = min_heap->count;
@@ -83,8 +83,22 @@ void min_heap_insert (min_heap_t min_heap, element_t element){
 
     min_heap->elements[min_heap->count] = element;
     min_heap->count++;
+    sift_up(min_heap);
 
 }
 
-element_t min_heap_peek(min_heap_t);
-element_t min_heap_pop(min_heap_t);
+element_t min_heap_peek(min_heap_t min_heap) {
+    return min_heap->count ? min_heap->elements[0] : NULL;
+}
+
+element_t min_heap_pop(min_heap_t min_heap){
+
+    if (min_heap->count == 0) return NULL;
+
+    element_t result = min_heap->elements[0];
+    min_heap->elements[0] = min_heap->elements[min_heap->count - 1];
+    min_heap->count--;
+    sift_down(min_heap);
+
+    return result;
+}

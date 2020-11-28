@@ -14,6 +14,7 @@ void print_noskip(const char * string, ...){
 
 }
 
-void logError(const char* msg, const char* file, int line){
-    print("ERROR: (%s:%d): %s", file, line, msg);
+void print_error (const char* msg, const char* file, int line){
+    print("ERROR: (%s:%d): %s\n", file, line, msg);
+    fflush(stdout);
 }

@@ -1,6 +1,6 @@
 #include <stddef.h>
-#include "List.h"
-#include "../Utils/Memory.h"
+#include "list.h"
+#include "../utils/memory.h"
 
 typedef struct _node_t {
     element_t element;

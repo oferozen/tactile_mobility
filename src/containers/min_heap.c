@@ -12,13 +12,13 @@ struct _min_heap_t {
     size_t count;
     size_t size;
     element_t* elements;
-    element_compare_method_t elementCompare;
+    compare_fun_t compare;
 };
 
-min_heap_t min_heap_create (element_compare_method_t elementCompare) {
+min_heap_t min_heap_create (compare_fun_t compare) {
     ALLOCATE_AND_ASSIGN(min_heap_t, min_heap);
     min_heap->count = 0;
-    min_heap->elementCompare = elementCompare;
+    min_heap->compare = compare;
     min_heap->elements = ALLOCATE(sizeof(element_t) * INIT_HEAP_SIZE);
     min_heap->size = INIT_HEAP_SIZE;
     return min_heap;
@@ -29,29 +29,31 @@ size_t left(size_t index) { return ((index * 2) + 1); }
 size_t right(size_t index) { return ((index * 2) + 2); }
 size_t parent(size_t index) { return ((index - 1) / 2); }
 
+
+
 void sift_down ( min_heap_t minHeap ) {
     element_t* elements = minHeap->elements;
-    size_t index = 0;
+    size_t i = 0;
 
     while (true){
 
-        bool swap_left = indexValid(minHeap, left(index)) &&
-                         minHeap->elementCompare(elements[index], elements[left(index)]) < 0;
-        bool swap_right = indexValid(minHeap, right(index)) &&
-                          minHeap->elementCompare(elements[index], elements[right(index)]) < 0;
+        bool swap_left = indexValid(minHeap, left(i)) &&
+                         minHeap->compare(elements[i], elements[left(i)]) < 0;
+        bool swap_right = indexValid(minHeap, right(i)) &&
+                          minHeap->compare(elements[i], elements[right(i)]) < 0;
 
         if (swap_right && swap_left){
-            swap_right = minHeap->elementCompare(elements[left(index)], elements[right(index)]) < 0;
+            swap_right = minHeap->compare(elements[left(i)], elements[right(i)]) < 0;
             swap_left = !swap_right;
         }
 
         if (swap_left) {
-            SWAP(elements[index], elements[left(index)], element_t);
-            index = left(index);
+            SWAP(elements[i], elements[left(i)], element_t);
+            i = left(i);
 
         } else if (swap_right) {
-            SWAP(elements[index], elements[right(index)], element_t);
-            index = right(index);
+            SWAP(elements[i], elements[right(i)], element_t);
+            i = right(i);
 
         } else {
             return;
@@ -64,7 +66,7 @@ void sift_up (min_heap_t min_heap) {
     element_t* elements = min_heap->elements;
     size_t index = min_heap->count - 1;
     while (index != 0 &&
-          (min_heap->elementCompare(elements[index], elements[parent(index)]) > 0)) {
+          (min_heap->compare(elements[index], elements[parent(index)]) > 0)) {
 
         SWAP(elements[parent(index)], elements[index], element_t);
         index = parent(index);
@@ -76,14 +78,13 @@ void min_heap_insert (min_heap_t min_heap, element_t element){
     if (min_heap->count == min_heap->size) {
 
         size_t new_size = min_heap->size * 2; // TODO: Check for overflow
-        element_t* new_element_array = ALLOCATE(sizeof(element_t) * new_size);
-        memset(new_element_array, 0, sizeof(element_t) * new_size);
+        element_t* new_array = ALLOCATE(sizeof(element_t) * new_size);
 
         // memmove could prove useful when overriding the memory management
-        memmove(new_element_array, min_heap->elements, sizeof(element_t) * min_heap->count);
+        memmove(new_array, min_heap->elements, sizeof(element_t) * min_heap->count);
 
         DEALLOCATE(min_heap->elements);
-        min_heap->elements = new_element_array;
+        min_heap->elements = new_array;
         min_heap->size = new_size;
     }
 
@@ -110,7 +111,7 @@ element_t min_heap_pop(min_heap_t min_heap){
 }
 
 
-void min_heap_action(min_heap_t min_heap, element_action_method_t action, void* meta){
+void min_heap_action(min_heap_t min_heap, action_fun_t action, void* meta){
     bool stop = false;
     for (size_t index = 0; index < min_heap->count; index++){
         action(min_heap->elements[index], meta, &stop);

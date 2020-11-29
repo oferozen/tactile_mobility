@@ -28,7 +28,7 @@ void print_int (element_t element, void* meta, bool* stop) {
     fflush(stdout);
 }
 
-void print_heap (min_heap_t mh) {
+void print_int_min_heap (min_heap_t mh) {
     print("\n");
     min_heap_action(mh, print_int, NULL);
     print("\n");
@@ -39,31 +39,34 @@ bool test_min_heap() {
     bool result = true;
     min_heap_t mh = min_heap_create(int_compare);
     min_heap_insert(mh, int_create(50));
-    print_heap(mh);
+    print_int_min_heap(mh);
     min_heap_insert(mh, int_create(40));
-    print_heap(mh);
+    print_int_min_heap(mh);
     min_heap_insert(mh, int_create(60));
-    print_heap(mh);
+    print_int_min_heap(mh);
     min_heap_insert(mh, int_create(100));
-    print_heap(mh);
+    print_int_min_heap(mh);
     min_heap_insert(mh, int_create(3));
-    print_heap(mh);
+    print_int_min_heap(mh);
     min_heap_insert(mh, int_create(17));
-    print_heap(mh);
 
+    ASSERT(((int_t) min_heap_peek(mh))->data == 3);
+    ASSERT(result &= (((int_t) min_heap_pop(mh))->data == 3));
 
-    ASSERT(((int_t) min_heap_peek(mh))->data == 2);
-    ASSERT(((int_t) min_heap_pop(mh))->data == 3);
-
-    printf("\nvalue = %d", ((int_t) min_heap_peek(mh))->data );
     ASSERT(((int_t) min_heap_peek(mh))->data == 17);
-    ASSERT(((int_t) min_heap_pop(mh))->data == 17);
+    ASSERT(result &= (((int_t) min_heap_pop(mh))->data == 17));
 
+    min_heap_insert(mh, int_create(6));
+    min_heap_insert(mh, int_create(16));
+    min_heap_insert(mh, int_create(18));
+    min_heap_insert(mh, int_create(-1));
+    print_int_min_heap(mh);
 
+    ASSERT(result &= (((int_t) min_heap_pop(mh))->data == -1));
+    ASSERT(result &= (((int_t) min_heap_pop(mh))->data == 6));
+    ASSERT(result &= (((int_t) min_heap_pop(mh))->data == 16));
 
-    return true;
+    ASSERT(result);
 
     return result;
-
-
 }

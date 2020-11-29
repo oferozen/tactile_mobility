@@ -12,10 +12,10 @@
 
 typedef struct _min_heap_t* min_heap_t;
 
-min_heap_t min_heap_create (element_compare_method_t e);
+min_heap_t min_heap_create (compare_fun_t e);
 void min_heap_insert (min_heap_t, element_t);
 element_t min_heap_peek(min_heap_t);
 element_t min_heap_pop(min_heap_t);
-void min_heap_action(min_heap_t min_heap, element_action_method_t action, void* meta);
+void min_heap_action(min_heap_t min_heap, action_fun_t action, void* meta);
 
 #endif /* SRC_CONTAINERS_MINHEAP_H_ */

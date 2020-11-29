@@ -11,6 +11,11 @@ enum endian_t {
     big_endian
 };
 
+enum e_signed_t {
+    e_signed,
+    e_unsigned,
+};
+
 enum endian_t get_endiannes ();
 void change_endianness (char* bytes, size_t size);
 void inject_field(uint8_t* data, size_t data_size, char* field, size_t start_bit, size_t length);

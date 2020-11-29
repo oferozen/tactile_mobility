@@ -6,7 +6,7 @@
 #include "random.h"
 #include "bits.h"
 
-signal_t signal_create (char* name, size_t start_bit, size_t length, enum endian_t endian, bool is_signed){
+signal_t signal_create (char* name, size_t start_bit, size_t length, enum endian_t endian, enum e_signed_t sign){
 
     ALLOCATE_AND_ASSIGN(signal_t, signal);
     signal->name = strdup(name);
@@ -14,7 +14,7 @@ signal_t signal_create (char* name, size_t start_bit, size_t length, enum endian
     signal->length = length;
     signal->byte_size = (length / 8) + 1;
     signal->endian = endian;
-    signal->is_signed = is_signed;
+    signal->sign = sign;
     return signal;
 
 }
@@ -32,7 +32,7 @@ void signal_set_signed_limits (signal_t signal, int32_t min, int32_t max) {
 uint32_t signal_generate_data (signal_t signal) {
 
     uint32_t result;
-    if (signal->is_signed) {
+    if (signal->sign == e_signed) {
         result = generate_random_signed(signal->min.signed_int, signal->max.signed_int);
     } else {
         result = generate_random_signed(signal->min.usigned_int, signal->max.usigned_int);

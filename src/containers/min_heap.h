@@ -1,10 +1,3 @@
-/*
- * MinHeap.h
- *
- *  Created on: Nov 27, 2020
- *      Author: oferozen
- */
-
 #ifndef SRC_CONTAINERS_MINHEAP_H_
 #define SRC_CONTAINERS_MINHEAP_H_
 

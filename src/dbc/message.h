@@ -2,8 +2,8 @@
 #define SRC_MESSAGE_H_
 
 #include <stdbool.h>
-#include "timer.h"
-#include "containers/list.h"
+#include "../hw/timer/timer.h"
+#include "../containers/list.h"
 #include "signal.h"
 
 typedef uint8_t* payload_t;

@@ -3,9 +3,9 @@
 #include <time.h>
 #include "random.h"
 /*
- * RAND_MAX minimum values is 1 << 15.
- * For simpliciy let assume that it is the actual value.
- * More optimization can be done here.
+ * Handling 2 issues:
+ * (1) RAND_MAX is only 1 << 15
+ * (2) to keep randomization uniform we sometime need to re-roll again
  */
 #undef RAND_MAX // Redundant, but makes it clear
 #define RAND_MAX (1 << 15)

@@ -1,7 +1,7 @@
 #include "tests.h"
 #include "../utils/memory.h"
 #include "../containers/min_heap.h"
-#include "../utils/print.h"
+#include "../hw/monitor/monitor.h"
 
 typedef struct _int_t {
     int data;
@@ -29,9 +29,9 @@ void print_int (element_t element, meta_t meta, bool* stop) {
 }
 
 void print_int_min_heap (min_heap_t mh) {
-    print("\n");
+    monitor_print("\n");
     min_heap_action(mh, print_int, NULL);
-    print("\n");
+    monitor_print("\n");
 }
 
 bool test_min_heap() {

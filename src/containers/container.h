@@ -1,10 +1,3 @@
-/*
- * Container.h
- *
- *  Created on: Nov 27, 2020
- *      Author: oferozen
- */
-
 #ifndef CONTAINERS_CONTAINER_H_
 #define CONTAINERS_CONTAINER_H_
 

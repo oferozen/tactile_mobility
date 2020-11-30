@@ -1,8 +1,8 @@
 #include "tests.h"
-#include "../utils/print.h"
 #include <stdbool.h>
 #include <stdint.h>
-#include "../bits.h"
+#include "../utils/bits.h"
+#include "../hw/monitor/monitor.h"
 
 bool test_bits(){
     bool passed = true;

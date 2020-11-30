@@ -2,7 +2,7 @@
 #define SRC_UTILS_MEMORY_H_
 
 #include <stdlib.h>
-#include "print.h"
+#include "../hw/monitor/monitor.h"
 
 #if DEBUG
 #define ALLOCATE(size) allocate(size, __FILE__, __LINE__)

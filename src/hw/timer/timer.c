@@ -1,7 +1,7 @@
 #include <time.h>
 #include <stdio.h>
 #include "timer.h"
-#include "utils/memory.h"
+#include "../../utils/memory.h"
 
 
 timer_t timer_create() {

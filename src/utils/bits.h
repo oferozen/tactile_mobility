@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "utils/macros.h"
+#include "macros.h"
 
 enum endian_t {
     little_endian,

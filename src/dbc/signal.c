@@ -2,9 +2,9 @@
 #include <time.h>
 #include <string.h>
 #include "signal.h"
-#include "utils/memory.h"
-#include "random.h"
-#include "bits.h"
+#include "../utils/memory.h"
+#include "../utils/random.h"
+#include "../utils/bits.h"
 
 signal_t signal_create (char* name, size_t start_bit, size_t length, enum endian_t endian, enum e_signed_t sign){
 

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "memory.h"
-#include "print.h"
+#include "../hw/monitor/monitor.h"
 
 
 #if DEBUG

@@ -1,7 +1,7 @@
 #include <stdbool.h>
-#include "../random.h"
+#include "../utils/random.h"
 #include "tests.h"
-#include "../utils/print.h"
+#include "../hw/monitor/monitor.h"
 
 bool test_random () {
 

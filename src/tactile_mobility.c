@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tests/tests.h"
-#include "transmitter.h"
-#include "timer.h"
+#include "controller/controller.h"
+#include "hw/timer/timer.h"
 #include "config.h"
-#include "random.h"
+#include "utils/random.h"
 
 int main(void) {
 
@@ -24,10 +24,10 @@ int main(void) {
     random_init();
 
     dbc_reader_t dbc_reader = dbc_reader_create("path");
-    transmitter_t transmitter = transmitter_create(dbc_reader);
+    controller_t controller = controller_create(dbc_reader);
 
-    transmitter_run(transmitter, CONVERT_SECONDS_2_100US(10));
-    transmitter_print_jitter(transmitter);
+    controller_run(controller, CONVERT_SECONDS_2_100US(10));
+    controller_print_jitter(controller);
 
     printf("\n====\nDone");
 	return EXIT_SUCCESS;

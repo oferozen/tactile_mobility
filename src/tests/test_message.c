@@ -1,6 +1,6 @@
 #include "stdbool.h"
-#include "../message.h"
-#include "../utils/print.h"
+#include "../dbc/message.h"
+#include "../hw/monitor/monitor.h"
 #include "tests.h"
 
 

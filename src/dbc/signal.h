@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "bits.h"
+#include "../utils/bits.h"
 
 typedef struct _signal_t {
 

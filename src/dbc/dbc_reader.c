@@ -1,6 +1,6 @@
 #include "dbc_reader.h"
-#include "containers/list.h"
-#include "utils/memory.h"
+#include "../containers/list.h"
+#include "../utils/memory.h"
 
 struct _dbc_reader_t {
     list_t messages;

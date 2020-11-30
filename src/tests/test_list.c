@@ -1,6 +1,5 @@
 #include "tests.h"
 #include <stdbool.h>
-#include "../utils/print.h"
 #include "../containers/list.h"
 #include "../utils/memory.h"
 

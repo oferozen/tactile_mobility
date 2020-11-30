@@ -13,6 +13,5 @@ void print(const char * string, ...);
 void print_noskip(const char * string, ...);
 void print_error(const char* msg, const char* file, int line);
 
-
 #endif /* SRC_UTILS_PRINT_H_ */
 

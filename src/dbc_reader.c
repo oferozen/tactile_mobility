@@ -7,21 +7,40 @@ struct _dbc_reader_t {
     bool init;
 };
 
-void dbc_reader_create_messages() {
+void dbc_reader_create_messages(dbc_reader_t dbc_reader) {
 
-    message_t message = message_create("WHEEL_SPEEDS", "VSA", 464, 8);
+    signal_t signal = NULL;
 
-    signal_t signal1 = signal_create("sig1", 15, 15, big_endian, false);
-    signal_t signal2 = signal_create("sig2", 30, 15, big_endian, false);
-    signal_t signal3 = signal_create("sig3", 45 ,15, big_endian, false);
-/*
-    signal_set_unsigned_limits(signal1, val1, val1);
-    signal_set_unsigned_limits(signal2, val2, val2);
-    signal_set_unsigned_limits(signal3, val3, val3);
+    message_t message_wheels = message_create("WHEEL_SPEEDS", "VSA", 464, 8, 100);
 
-    message_add_signal(message, signal1);
-    message_add_signal(message, signal2);
-    */
+    signal = signal_create("WHEEL_SPEED_FL", 0, 15, big_endian, e_unsigned);
+    signal_set_unsigned_limits(signal, 0, 250);
+    message_add_signal(message_wheels, signal);
+
+    signal = signal_create("WHEEL_SPEED_FR", 15, 15, big_endian, e_unsigned);
+    signal_set_unsigned_limits(signal, 0, 250);
+    message_add_signal(message_wheels, signal);
+
+    signal = signal_create("WHEEL_SPEED_RL", 30, 15, big_endian, e_unsigned);
+    signal_set_signed_limits(signal, 0, 250);
+    message_add_signal(message_wheels, signal);
+
+    signal = signal_create("WHEEL_SPEED_RR", 45, 15, big_endian, e_unsigned);
+    signal_set_signed_limits(signal, 0, 250);
+    message_add_signal(message_wheels, signal);
+
+    message_t message_break = message_create("BREAK_MODULE", "VSA", 446, 3, 10);
+    signal = signal_create("BREAK_PRESSED", 4, 1, big_endian, e_unsigned);
+    signal_set_signed_limits(signal, 0, 1);
+    message_add_signal(message_break, signal);
+
+    list_t messages = list_create();
+
+
+    list_append(messages, message_wheels);
+    list_append(messages, message_break);
+
+    dbc_reader->messages = messages;
 
 }
 
@@ -29,6 +48,7 @@ dbc_reader_t dbc_reader_create(const char* path){
     ALLOCATE_AND_ASSIGN(dbc_reader_t, dbc_reader);
     dbc_reader->init = false;
     dbc_reader->messages = list_create();
+    dbc_reader_create_messages(dbc_reader);
     return dbc_reader;
 }
 

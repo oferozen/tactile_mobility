@@ -18,7 +18,7 @@ enum e_signed_t {
 
 enum endian_t get_endiannes ();
 void change_endianness (char* bytes, size_t size);
-void inject_field(uint8_t* data, size_t data_size, char* field, size_t start_bit, size_t length);
+void inject_field(uint8_t* data, size_t data_size, uint8_t* field, size_t start_bit, size_t length);
 
 // Create a bitmask of length \a len.
 #define BIT_MASK(len)           ( (1<<(len))-1 )

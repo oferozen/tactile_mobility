@@ -43,7 +43,9 @@ uint32_t signal_generate_data (signal_t signal) {
        change_endianness((char*)&result, 4);
     }
 
-    result <<= (32 - (signal->length));
+    if (endian == little_endian){
+        result >>= (32 - signal->length);
+    }
 
     return result;
 }

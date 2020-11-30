@@ -45,6 +45,7 @@ void list_append(list_t list, element_t element) {
 
 element_t list_first(list_t list) {
 
+    if (list->size == 0) return NULL;
     list->iterator = list->head->next;
     return list->iterator->element;
 
@@ -76,4 +77,19 @@ element_t list_pop(list_t list) {
 
 size_t list_size(list_t list) {
     return list->size;
+}
+
+
+void list_cycle_first(list_t list){
+
+    if (list->size <= 1) return;
+
+    node_t node = list->head->next;
+
+    list->head->next = node->next;
+    node->next->prev = list->head;
+
+    list->tail->prev->next = node;
+    list->tail->prev = node;
+
 }

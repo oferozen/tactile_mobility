@@ -6,7 +6,7 @@
 
 bool test_message(){
 
-    bool result = PASSED;
+    bool passed = true;
 
     int x = 0;
     BIT_SET(x,0xFFF,0,0);
@@ -23,7 +23,7 @@ bool test_message(){
     signal_set_unsigned_limits(signal2, val2, val2);
     signal_set_unsigned_limits(signal3, val3, val3);
 
-    message_t message = message_create("msg1", "ofer", 123, 8);
+    message_t message = message_create("msg1", "ofer", 123, 8, 100);
     message_add_signal(message, signal1);
     message_add_signal(message, signal2);
     message_add_signal(message, signal3);
@@ -37,12 +37,12 @@ bool test_message(){
     message_generate_payload(message, 1);
 
     data = * (uint64_t*) message_pop_payload(message);
-    ASSERT(result = (BIT_GET(data, 64 - 45 - 15 , 15) == (val3 &( ( 1 << 15 ) -1))));
-    ASSERT(result = (BIT_GET(data, 64 - 30 - 15 , 15) == (val2 &( ( 1 << 15 ) -1)) ));
-    ASSERT(result = (BIT_GET(data, 64 - 15 - 15, 15) == (val1 &( ( 1 << 15 ) -1))));
+    ASSERT(passed = (BIT_GET(data, 64 - 45 - 15 , 15) == (val3 &( ( 1 << 15 ) -1))));
+    ASSERT(passed = (BIT_GET(data, 64 - 30 - 15 , 15) == (val2 &( ( 1 << 15 ) -1)) ));
+    ASSERT(passed = (BIT_GET(data, 64 - 15 - 15, 15) == (val1 &( ( 1 << 15 ) -1))));
 
     data = * (uint64_t*) message_pop_payload(message);
-    ASSERT(result = (message_pop_payload(message) == NULL));
+    ASSERT(passed = (message_pop_payload(message) == NULL));
 
-    return result;
+    return passed;
 }

@@ -19,6 +19,7 @@ element_t list_first(list_t);
 element_t list_next(list_t);
 element_t list_pop(list_t);
 size_t list_size(list_t);
+void list_cycle_first(list_t);
 
 #endif /* CONTAINERS_LIST_H_ */
 

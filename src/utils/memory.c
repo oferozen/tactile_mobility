@@ -26,7 +26,6 @@ void* allocate(size_t _Size) {
 }
 #endif
 
-#define DEALLOCATE(p) deallocate(p)
 void deallocate(void* p){
     free(p);
 }

@@ -15,6 +15,12 @@ struct _min_heap_t {
     compare_fun_t compare;
 };
 
+int min_heap_compare(min_heap_t min_heap, size_t index1, size_t index2){
+    element_t* elements = min_heap->elements;
+    int result = min_heap->compare(elements[index1], elements[index2], NULL);
+    return result;
+}
+
 min_heap_t min_heap_create (compare_fun_t compare) {
     ALLOCATE_AND_ASSIGN(min_heap_t, min_heap);
     min_heap->count = 0;
@@ -38,12 +44,12 @@ void sift_down ( min_heap_t minHeap ) {
     while (true){
 
         bool swap_left = indexValid(minHeap, left(i)) &&
-                         minHeap->compare(elements[i], elements[left(i)]) < 0;
+                          min_heap_compare(minHeap, i, left(i)) < 0;
         bool swap_right = indexValid(minHeap, right(i)) &&
-                          minHeap->compare(elements[i], elements[right(i)]) < 0;
+                          min_heap_compare(minHeap, i, right(i)) < 0;
 
         if (swap_right && swap_left){
-            swap_right = minHeap->compare(elements[left(i)], elements[right(i)]) < 0;
+            swap_right = min_heap_compare(minHeap, left(i), right(i)) < 0;
             swap_left = !swap_right;
         }
 
@@ -66,7 +72,7 @@ void sift_up (min_heap_t min_heap) {
     element_t* elements = min_heap->elements;
     size_t index = min_heap->count - 1;
     while (index != 0 &&
-          (min_heap->compare(elements[index], elements[parent(index)]) > 0)) {
+           min_heap_compare(min_heap, index, parent(index)) > 0) {
 
         SWAP(elements[parent(index)], elements[index], element_t);
         index = parent(index);
@@ -111,10 +117,25 @@ element_t min_heap_pop(min_heap_t min_heap){
 }
 
 
-void min_heap_action(min_heap_t min_heap, action_fun_t action, void* meta){
+void min_heap_action(min_heap_t min_heap, action_fun_t action, meta_t meta){
     bool stop = false;
     for (size_t index = 0; index < min_heap->count; index++){
         action(min_heap->elements[index], meta, &stop);
         if (stop) break;
     }
 }
+
+element_t min_heap_peek_second(min_heap_t min_heap){
+    element_t* elements = min_heap->elements;
+
+    if (min_heap->count == 1) return NULL;
+    if (min_heap->count == 2) return elements[1];
+
+    if (min_heap_compare(min_heap, 1, 2) > 0)
+        return elements[2];
+
+    else
+        return elements[1];
+
+}
+

@@ -10,7 +10,7 @@
 #undef RAND_MAX // Redundant, but makes it clear
 #define RAND_MAX (1 << 15)
 
-void init_random() {
+void random_init() {
     time_t t;
     srand((unsigned) time(&t));
 }

@@ -13,7 +13,7 @@ int_t int_create(int val) {
    return result;
 }
 
-int int_compare(element_t element1, element_t element2 ){
+int int_compare(element_t element1, element_t element2, meta_t meta ){
     int_t int1 = (int_t) element1;
     int_t int2 = (int_t) element2;
     return int2->data - int1->data;
@@ -21,7 +21,7 @@ int int_compare(element_t element1, element_t element2 ){
 
 static int idx = -1;
 
-void print_int (element_t element, void* meta, bool* stop) {
+void print_int (element_t element, meta_t meta, bool* stop) {
     idx += 1;
     int value = ((int_t) element)->data;
     printf("%d_%d ", idx, value);

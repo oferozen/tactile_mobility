@@ -5,19 +5,26 @@
 #include "../bits.h"
 
 bool test_bits(){
-    bool passed = PASSED;
+    bool passed = true;
 
-    uint32_t data = 0xBBBBBBBB;
-    uint32_t field = 0xFF;
-    /*
+    uint64_t data;
+    uint32_t field;
 
-    inject_field((char*) &data, (char*) &field, 8, 8);
-    ASSERT(data == 0xBBBBffBB);
-    data = 0xBBBBBBBB;
+
+    data = 0x0;//BBBBBBBB;
+    field = 0xFF;
+    inject_field((uint8_t*) &data, 8,  (uint8_t*) &field, 8, 8);
+    ASSERT(data == 0xFF << 8);
+
+    data = 0x0;
     field = 0xFFF;
-    inject_field((char*) &data, (char*) &field, 16, 12);
-    ASSERT(data == 0xBfffBBBB);
-    */
+    inject_field((uint8_t*) &data, 4, (uint8_t*) &field, 16, 12);
+    ASSERT(data == 0xFFF << 16);
+
+    data = 0x0;
+    field = 0x123;
+    inject_field((uint8_t*) &data, 4, (uint8_t*) &field, 13, 12);
+    ASSERT(data == 0x123 << 13);
 
     return passed;
 }
